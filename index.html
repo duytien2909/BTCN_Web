@@ -23,10 +23,19 @@
         }
         .container {
             display: flex;
-            flex-direction: row;
-            height: 65vh;
-            width: 100%;
+            flex-direction: column;
+            height: 100vh;
+            padding: 10px;
         }
+
+        /* Main content flexbox */
+        .main-content {
+            display: flex;
+            width: 100%;
+            flex-grow: 1;
+            margin-bottom: 10px;
+        }
+
         /* News Section */
         .news-section {
             width: 20%;
@@ -46,14 +55,20 @@
         .news-item:hover {
             background-color: #ffeb99;
         }
-        /* Process Text Section */
-        .process-text-section {
-            width: 80%;
-            padding: 10px;
-            background-color: #fff;
+
+        /* Process Text Section and Drag-Drop combined*/
+        .right-section {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            width: 80%;
+        }
+
+        .process-text-section {
+            padding: 10px;
+            background-color: #fff;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
         .controls {
             display: flex;
@@ -71,16 +86,15 @@
             padding: 10px;
             margin-bottom: 10px;
             overflow-y: auto;
-            height: 300px;
+            height: 250px;
         }
+
         /* Drag and Drop Section */
         .drag-drop-section {
-            width: 100%;
-            background-color: #f2f9ff;
             padding: 10px;
+            background-color: #f2f9ff;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
         }
         .animal-grid {
             display: flex;
@@ -101,7 +115,8 @@
             width: 40px;
             height: 40px;
         }
-        /* Drop area fixed at bottom */
+
+        /* Drop Area */
         #drop-area {
             margin-top: 10px;
             padding: 10px;
@@ -111,6 +126,7 @@
             justify-content: center;
             flex-wrap: wrap;
             align-items: center;
+            background-color: #f5f5f5;
         }
         .drop-item {
             width: 70px;
@@ -122,9 +138,11 @@
             line-height: 70px;
             cursor: move;
         }
+
+        /* Add Button */
         .add-button {
-            margin-top: 10px;
             text-align: center;
+            margin-top: 10px;
         }
         .add-button button {
             padding: 10px 20px;
@@ -137,16 +155,12 @@
         .add-button button:hover {
             background-color: #45a049;
         }
+
         /* Footer */
         #footer {
             background-color: #b3c6ff;
             padding: 10px;
             text-align: center;
-        }
-        .bottom-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
         }
     </style>
 </head>
@@ -158,58 +172,62 @@
 
     <!-- Main Container -->
     <div class="container">
-        <!-- News Section -->
-        <div class="news-section">
-            <div id="news01" class="news-item" draggable="true">NEWS 01</div>
-            <div id="news02" class="news-item" draggable="true">NEWS 02</div>
-            <div id="news03" class="news-item" draggable="true">NEWS 03</div>
-            <div id="news04" class="news-item" draggable="true">NEWS 04</div>
+        <!-- Main Content Flexbox -->
+        <div class="main-content">
+            <!-- News Section -->
+            <div class="news-section">
+                <div id="news01" class="news-item" draggable="true">NEWS 01</div>
+                <div id="news02" class="news-item" draggable="true">NEWS 02</div>
+                <div id="news03" class="news-item" draggable="true">NEWS 03</div>
+                <div id="news04" class="news-item" draggable="true">NEWS 04</div>
+            </div>
+
+            <!-- Process Text + Drag and Drop Section -->
+            <div class="right-section">
+                <!-- Process Text Section -->
+                <div class="process-text-section">
+                    <div class="controls">
+                        <input type="text" id="searchText" placeholder="a|2">
+                        <button onclick="highlightText()">Highlight</button>
+                        <button onclick="deleteText()">Delete</button>
+                        <button onclick="resetText()">Reset</button>
+                        <button onclick="loadSample()">SampleText</button>
+                    </div>
+                    <div id="sampleText">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ipsum ratione dolorum, sunt deleniti laborum asperiores molestias! ...
+                    </div>
+                </div>
+
+                <!-- Drag and Drop Section -->
+                <div class="drag-drop-section">
+                    <div class="animal-grid">
+                        <div class="animal-item" draggable="true"><img src="mouse.png" alt="Mouse"></div>
+                        <div class="animal-item" draggable="true"><img src="buffalo.png" alt="Buffalo"></div>
+                        <div class="animal-item" draggable="true"><img src="tiger.png" alt="Tiger"></div>
+                        <div class="animal-item" draggable="true"><img src="cat.png" alt="Cat"></div>
+                        <div class="animal-item" draggable="true"><img src="dragon.png" alt="Dragon"></div>
+                        <div class="animal-item" draggable="true"><img src="snake.png" alt="Snake"></div>
+                        <div class="animal-item" draggable="true"><img src="horse.png" alt="Horse"></div>
+                        <div class="animal-item" draggable="true"><img src="goat.png" alt="Goat"></div>
+                        <div class="animal-item" draggable="true"><img src="dog.png" alt="Dog"></div>
+                        <div class="animal-item" draggable="true"><img src="pig.png" alt="Pig"></div>
+                    </div>
+
+                    <!-- Drop area -->
+                    <div id="drop-area"></div>
+
+                    <!-- Add Button -->
+                    <div class="add-button">
+                        <button id="addBtn">Add</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Process Text Section -->
-        <div class="process-text-section">
-            <div class="controls">
-                <input type="text" id="searchText" placeholder="a|2">
-                <button onclick="highlightText()">Highlight</button>
-                <button onclick="deleteText()">Delete</button>
-                <button onclick="resetText()">Reset</button>
-                <button onclick="loadSample()">SampleText</button>
-            </div>
-            <div id="sampleText">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ipsum ratione dolorum, sunt deleniti laborum asperiores molestias! ...
-            </div>
+        <!-- Footer -->
+        <div id="footer">
+            Menu 1 | Menu 2 | Menu 3 | Menu 4 | Menu 5
         </div>
-    </div>
-
-    <!-- Drag and Drop Section -->
-    <div class="bottom-container">
-        <div class="drag-drop-section">
-            <div class="animal-grid">
-                <div class="animal-item" draggable="true"><img src="mouse.png" alt="Mouse"></div>
-                <div class="animal-item" draggable="true"><img src="buffalo.png" alt="Buffalo"></div>
-                <div class="animal-item" draggable="true"><img src="tiger.png" alt="Tiger"></div>
-                <div class="animal-item" draggable="true"><img src="cat.png" alt="Cat"></div>
-                <div class="animal-item" draggable="true"><img src="dragon.png" alt="Dragon"></div>
-                <div class="animal-item" draggable="true"><img src="snake.png" alt="Snake"></div>
-                <div class="animal-item" draggable="true"><img src="horse.png" alt="Horse"></div>
-                <div class="animal-item" draggable="true"><img src="goat.png" alt="Goat"></div>
-                <div class="animal-item" draggable="true"><img src="dog.png" alt="Dog"></div>
-                <div class="animal-item" draggable="true"><img src="pig.png" alt="Pig"></div>
-            </div>
-
-            <!-- Drop area -->
-            <div id="drop-area"></div>
-
-            <!-- Add Button -->
-            <div class="add-button">
-                <button id="addBtn">Add</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div id="footer">
-        Menu 1 | Menu 2 | Menu 3 | Menu 4 | Menu 5
     </div>
 
     <script>
@@ -243,12 +261,6 @@
 
         // Drag and Drop
         let dragItem = null;
-
-        document.querySelectorAll('.news-item').forEach(item => {
-            item.addEventListener('dragstart', () => {
-                dragItem = item;
-            });
-        });
 
         document.querySelectorAll('.animal-item').forEach(item => {
             item.addEventListener('dragstart', () => {
