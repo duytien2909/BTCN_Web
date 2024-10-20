@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập 1 - MSSV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #header {
+            background-color: #b3c6ff;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            height: 65vh;
+            width: 100%;
+        }
+        /* News Section */
+        .news-section {
+            width: 20%;
+            background-color: #f2f2f2;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .news-item {
+            background-color: #ffd966;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .news-item:hover {
+            background-color: #ffeb99;
+        }
+        /* Process Text Section */
+        .process-text-section {
+            width: 80%;
+            padding: 10px;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .controls input[type="text"], .controls button {
+            padding: 5px;
+            margin-right: 5px;
+        }
+        #sampleText {
+            flex-grow: 1;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            overflow-y: auto;
+            height: 300px;
+        }
+        /* Drag and Drop Section */
+        .drag-drop-section {
+            width: 100%;
+            background-color: #f2f9ff;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .animal-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .animal-item {
+            width: 70px;
+            height: 70px;
+            margin: 10px;
+            background-color: #d9eaf7;
+            text-align: center;
+            line-height: 70px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .animal-item img {
+            width: 40px;
+            height: 40px;
+        }
+        /* Drop area fixed at bottom */
+        #drop-area {
+            margin-top: 10px;
+            padding: 10px;
+            border: 2px dashed #aaa;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .drop-item {
+            width: 70px;
+            height: 70px;
+            background-color: #fff2cc;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 70px;
+            cursor: move;
+        }
+        .add-button {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .add-button button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .add-button button:hover {
+            background-color: #45a049;
+        }
+        /* Footer */
+        #footer {
+            background-color: #b3c6ff;
+            padding: 10px;
+            text-align: center;
+        }
+        .bottom-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header">
+        Bài tập 1 - <MSSV>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- News Section -->
+        <div class="news-section">
+            <div id="news01" class="news-item" draggable="true">NEWS 01</div>
+            <div id="news02" class="news-item" draggable="true">NEWS 02</div>
+            <div id="news03" class="news-item" draggable="true">NEWS 03</div>
+            <div id="news04" class="news-item" draggable="true">NEWS 04</div>
+        </div>
+
+        <!-- Process Text Section -->
+        <div class="process-text-section">
+            <div class="controls">
+                <input type="text" id="searchText" placeholder="a|2">
+                <button onclick="highlightText()">Highlight</button>
+                <button onclick="deleteText()">Delete</button>
+                <button onclick="resetText()">Reset</button>
+                <button onclick="loadSample()">SampleText</button>
+            </div>
+            <div id="sampleText">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ipsum ratione dolorum, sunt deleniti laborum asperiores molestias! ...
+            </div>
+        </div>
+    </div>
+
+    <!-- Drag and Drop Section -->
+    <div class="bottom-container">
+        <div class="drag-drop-section">
+            <div class="animal-grid">
+                <div class="animal-item" draggable="true"><img src="mouse.png" alt="Mouse"></div>
+                <div class="animal-item" draggable="true"><img src="buffalo.png" alt="Buffalo"></div>
+                <div class="animal-item" draggable="true"><img src="tiger.png" alt="Tiger"></div>
+                <div class="animal-item" draggable="true"><img src="cat.png" alt="Cat"></div>
+                <div class="animal-item" draggable="true"><img src="dragon.png" alt="Dragon"></div>
+                <div class="animal-item" draggable="true"><img src="snake.png" alt="Snake"></div>
+                <div class="animal-item" draggable="true"><img src="horse.png" alt="Horse"></div>
+                <div class="animal-item" draggable="true"><img src="goat.png" alt="Goat"></div>
+                <div class="animal-item" draggable="true"><img src="dog.png" alt="Dog"></div>
+                <div class="animal-item" draggable="true"><img src="pig.png" alt="Pig"></div>
+            </div>
+
+            <!-- Drop area -->
+            <div id="drop-area"></div>
+
+            <!-- Add Button -->
+            <div class="add-button">
+                <button id="addBtn">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer">
+        Menu 1 | Menu 2 | Menu 3 | Menu 4 | Menu 5
+    </div>
+
+    <script>
+        // Highlight text
+        function highlightText() {
+            let search = document.getElementById("searchText").value;
+            let text = document.getElementById("sampleText").innerHTML;
+            let regex = new RegExp(search, 'g');
+            let highlighted = text.replace(regex, `<span style="background-color: yellow;">${search}</span>`);
+            document.getElementById("sampleText").innerHTML = highlighted;
+        }
+
+        // Delete text
+        function deleteText() {
+            let search = document.getElementById("searchText").value;
+            let text = document.getElementById("sampleText").innerHTML;
+            let regex = new RegExp(search, 'g');
+            let deleted = text.replace(regex, '');
+            document.getElementById("sampleText").innerHTML = deleted;
+        }
+
+        // Reset text
+        function resetText() {
+            document.getElementById("sampleText").innerHTML = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ipsum ratione dolorum, sunt deleniti laborum asperiores molestias! ...";
+        }
+
+        // Load sample text
+        function loadSample() {
+            document.getElementById("sampleText").innerHTML = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ipsum ratione dolorum, sunt deleniti laborum asperiores molestias! Provident cumque amet, quod cupiditate, ut animi sequi voluptate numquam, possimus quo quisquam minima.";
+        }
+
+        // Drag and Drop
+        let dragItem = null;
+
+        document.querySelectorAll('.news-item').forEach(item => {
+            item.addEventListener('dragstart', () => {
+                dragItem = item;
+            });
+        });
+
+        document.querySelectorAll('.animal-item').forEach(item => {
+            item.addEventListener('dragstart', () => {
+                dragItem = item;
+            });
+        });
+
+        let dropArea = document.getElementById('drop-area');
+
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        dropArea.addEventListener('drop', () => {
+            if (dragItem) {
+                let newItem = document.createElement('div');
+                newItem.classList.add('drop-item');
+                newItem.innerHTML = dragItem.innerHTML;
+                dropArea.appendChild(newItem);
+                dragItem = null;
+            }
+        });
+
+        // Add Button Functionality
+        document.getElementById('addBtn').addEventListener('click', function() {
+            let newDiv = document.createElement('div');
+            newDiv.classList.add('drop-item');
+            newDiv.textContent = 'New Animal';
+            dropArea.appendChild(newDiv);
+        });
+    </script>
+</body>
+</html>
