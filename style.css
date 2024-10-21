@@ -1,100 +1,205 @@
-/* General reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
 }
-
-.container {
-    width: 1280px;
-    margin: 0 auto;
-}
-
-header {
-    background-color: #4a90e2;
-    color: white;
-    padding: 20px;
+#header {
+    background-color: #b3c6ff;
+    padding: 10px;
     text-align: center;
-}
-
-nav {
-    background-color: #e67e22;
-    padding: 10px;
-}
-
-nav ul {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-around;
-}
-
-nav ul li {
-    padding: 10px;
-    color: white;
-    cursor: pointer;
-}
-
-nav ul li.active {
-    background-color: #f39c12;
+    font-size: 24px;
     font-weight: bold;
+    color: #333;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 10px;
 }
 
-.content {
+/* Main content flexbox */
+.main-content {
     display: flex;
+    width: 100%;
+    flex-grow: 1;
+    margin-bottom: 10px;
+}
+
+/* News Section */
+.news-content {
+    display: none; /* Ẩn nội dung mặc định */
+    padding: 10px;
+    background-color: #e6f2ff;
+    margin-bottom: 10px;
+}
+
+
+/* Process Text Section and Drag-Drop combined*/
+.right-section {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.process-text-section {
+    padding: 10px;
+    background-color: #fff;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.controls input[type="text"], .controls button {
+    padding: 5px;
+    margin-right: 5px;
+}
+#text {
+    flex-grow: 1;
+    background: linear-gradient(to right, #420404, #000000);
+    padding: 10px;
+    margin-bottom: 10px;
+    overflow-y: auto;
+    height: 250px;
+    -webkit-background-clip: text; /* Clip cho văn bản */
+    color: transparent; /* Ẩn màu chữ để hiển thị gradient */
+}
+#sampleText {
+    background: linear-gradient(to right, #420404, #000000);
+    overflow-y: auto;
+    -webkit-background-clip: text; /* Clip cho văn bản */
+    color: transparent; /* Ẩn màu chữ để hiển thị gradient */
+}
+#color-inputs {
+    display: none; /* Ẩn các input màu mặc định */
     margin-top: 20px;
 }
 
-/* Side */
-.side {
-    width: 256px;
-    background-color: #f8f9fa;
-    padding: 10px;
-    border-right: 2px solid #e0e0e0;
-}
-
-.side .news-item {
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
+#logo {
+    font-size: 3rem;
     cursor: pointer;
+    margin-top: 20px;
 }
 
-/* Main content */
-main {
-    flex-grow: 1;
-    padding: 20px;
+#checkboxes {
+    display: none; /* Ẩn checkbox mặc định */
+    margin-top: 20px;
 }
-
-.process-text, .drag-drop {
-    margin-bottom: 20px;
-}
-
-.drag-drop {
-    background-color: #e0f7fa;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-}
-
-.drag-item {
+/* Drag and Drop Section */
+.drag-drop-section {
     padding: 10px;
-    background-color: #d1c4e9;
+    background-color: #f2f9ff;
+    display: flex;
+    flex-direction: column;
+}
+.animal-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.animal-item {
+    width: 70px;
+    height: 70px;
+    margin: 10px;
+    background-color: #d9eaf7;
     text-align: center;
-    border: 1px solid #b39ddb;
+    line-height: 70px;
+    border-radius: 5px;
     cursor: pointer;
 }
+.animal-item img {
+    width: 40px;
+    height: 40px;
+}
 
-footer {
-    clear: both;
-    background-color: #34495e;
+/* Drop Area */
+#drop-area {
+    margin-top: 10px;
+    padding: 10px;
+    border: 2px dashed #aaa;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+.drop-item {
+    width: 70px;
+    height: 70px;
+    background-color: #fff2cc;
+    margin: 10px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 70px;
+    cursor: move;
+}
+
+/* Add Button */
+.add-button {
+    text-align: center;
+    margin-top: 10px;
+}
+.add-button button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
     color: white;
-    text-align: center;
-    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.add-button button:hover {
+    background-color: #45a049;
+}
+/* Định dạng cho Header */
+#header {
+    background-color: #4CAF50; /* Màu nền */
+    color: white; /* Màu chữ */
+    padding: 20px; /* Khoảng cách nội dung */
+    text-align: center; /* Canh giữa nội dung */
+}
+
+/* Định dạng cho Nav */
+nav {
+    margin-top: 15px; /* Khoảng cách phía trên */
+}
+
+nav ul {
+    list-style-type: none; /* Không hiển thị dấu đầu dòng */
+    padding: 0; /* Xóa khoảng cách */
+}
+
+nav ul li {
+    display: inline; /* Hiển thị các phần tử li trên một hàng */
+    margin: 0 15px; /* Khoảng cách giữa các liên kết */
+}
+
+nav ul li a {
+    color: white; /* Màu chữ cho các liên kết */
+    text-decoration: none; /* Không gạch chân */
+}
+
+/* Hiệu ứng hover cho các liên kết */
+nav ul li a:hover {
+    text-decoration: underline; /* Gạch chân khi di chuột vào */
+}
+
+/* Định dạng cho Footer */
+#footer {
+    background: linear-gradient(to right, #efaeae, #e9eba4);
+
+    color: white; /* Màu chữ */
+    text-align: center; /* Canh giữa nội dung */
+    padding: 10px; /* Khoảng cách nội dung */
+    position: relative; /* Để footer không bị tràn ra ngoài */
+    bottom: 0; /* Giữ footer ở dưới cùng */
+    width: 100%; /* Chiều rộng 100% */
 }
