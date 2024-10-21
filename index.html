@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài Tập 1 - MSSV</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <title>Bài Tập 1 - 201</title>
     <style>
         * {
             margin: 0;
@@ -37,24 +41,13 @@
         }
 
         /* News Section */
-        .news-section {
-            width: 20%;
-            background-color: #f2f2f2;
+        .news-content {
+            display: none; /* Ẩn nội dung mặc định */
             padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            background-color: #e6f2ff;
+            margin-bottom: 10px;
         }
-        .news-item {
-            background-color: #ffd966;
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .news-item:hover {
-            background-color: #ffeb99;
-        }
+
 
         /* Process Text Section and Drag-Drop combined*/
         .right-section {
@@ -80,15 +73,37 @@
             padding: 5px;
             margin-right: 5px;
         }
-        #sampleText {
+        #text {
             flex-grow: 1;
-            border: 1px solid #ccc;
+            background: linear-gradient(to right, #420404, #000000);
             padding: 10px;
             margin-bottom: 10px;
             overflow-y: auto;
             height: 250px;
+            -webkit-background-clip: text; /* Clip cho văn bản */
+            color: transparent; /* Ẩn màu chữ để hiển thị gradient */
+        }
+        #sampleText {
+            background: linear-gradient(to right, #420404, #000000);
+            overflow-y: auto;
+            -webkit-background-clip: text; /* Clip cho văn bản */
+            color: transparent; /* Ẩn màu chữ để hiển thị gradient */
+        }
+        #color-inputs {
+            display: none; /* Ẩn các input màu mặc định */
+            margin-top: 20px;
         }
 
+        #logo {
+            font-size: 3rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #checkboxes {
+            display: none; /* Ẩn checkbox mặc định */
+            margin-top: 20px;
+        }
         /* Drag and Drop Section */
         .drag-drop-section {
             padding: 10px;
@@ -175,26 +190,53 @@
         <!-- Main Content Flexbox -->
         <div class="main-content">
             <!-- News Section -->
+            <!-- News Section -->
             <div class="news-section">
                 <div id="news01" class="news-item" draggable="true">NEWS 01</div>
+                <div id="contentNews01" class="news-content"></div> <!-- Chứa nội dung của NEWS 01 -->
+
                 <div id="news02" class="news-item" draggable="true">NEWS 02</div>
+                <div id="contentNews02" class="news-content"></div> <!-- Chứa nội dung của NEWS 02 -->
+
                 <div id="news03" class="news-item" draggable="true">NEWS 03</div>
+                <div id="contentNews03" class="news-content"></div> <!-- Chứa nội dung của NEWS 03 -->
+
                 <div id="news04" class="news-item" draggable="true">NEWS 04</div>
+                <div id="contentNews04" class="news-content"></div> <!-- Chứa nội dung của NEWS 04 -->
             </div>
+
 
             <!-- Process Text + Drag and Drop Section -->
             <div class="right-section">
                 <!-- Process Text Section -->
                 <div class="process-text-section">
                     <div class="controls">
-                        <input type="text" id="searchText" placeholder="a|2">
+                        <input type="text" id="searchText" placeholder="nhập từ cần tìm">
                         <button onclick="highlightText()">Highlight</button>
                         <button onclick="deleteText()">Delete</button>
                         <button onclick="resetText()">Reset</button>
-                        <button onclick="loadSample()">SampleText</button>
+                        <span id="sampleText">Sample Text</span>
+                        <div id="logo"><i class="fas fa-cog"></i></div>
+                        
+                            <div id="color-inputs"> <!-- Phần input màu -->
+                                <input type="color" name="color-selector" id="color-left" value="#ffffff">
+                                <input type="color" name="color-selector" id="color-right" value="#000000">
+                            </div>
+                            <div id="checkboxes"> <!-- Phần checkbox -->
+                                <label>
+                                    <input type="checkbox" id="boldCheckbox"> Tô đậm
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="italicCheckbox"> In nghiêng
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="underlineCheckbox"> Gạch dưới
+                                </label>
+                            </div>
+                        
                     </div>
-                    <div id="sampleText">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ipsum ratione dolorum, sunt deleniti laborum asperiores molestias! ...
+                    <div id="text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </div>
                 </div>
 
@@ -231,32 +273,152 @@
     </div>
 
     <script>
+        // Hiện các input màu và checkbox khi nhấp vào logo
+        $('#logo').on('click', () => {
+            $('#color-inputs').toggle(); // Chuyển đổi trạng thái hiển thị của phần input màu
+            $('#checkboxes').toggle(); // Chuyển đổi trạng thái hiển thị của checkbox
+        });
+
+        // Thay đổi màu gradient cho văn bản
+        $('input[type="color"]').on('input', (e) => {
+            $('#sampleText').css({
+                'background': `linear-gradient(to right, ${$("#color-left").val()}, ${$("#color-right").val()})`,
+                'background-clip': 'text',
+                '-webkit-background-clip': 'text',
+                'color': 'transparent' // Ẩn màu chữ để hiển thị gradient
+            });
+        });
+
+        // Thay đổi kiểu dáng văn bản dựa trên các checkbox
+        $('#boldCheckbox').on('change', function() {
+            $('#sampleText').css('font-weight', this.checked ? 'bold' : 'normal');
+        });
+
+        $('#italicCheckbox').on('change', function() {
+            $('#sampleText').css('font-style', this.checked ? 'italic' : 'normal');
+        });
+
+        $('#underlineCheckbox').on('change', function() {
+            $('#sampleText').css('text-decoration', this.checked ? 'underline' : 'none');
+        });
         // Highlight text
-        function highlightText() {
-            let search = document.getElementById("searchText").value;
-            let text = document.getElementById("sampleText").innerHTML;
-            let regex = new RegExp(search, 'g');
-            let highlighted = text.replace(regex, `<span style="background-color: yellow;">${search}</span>`);
-            document.getElementById("sampleText").innerHTML = highlighted;
+        // Hàm áp dụng các thuộc tính in nghiêng, gạch dưới, tô đậm
+        function applyTextStyles() {
+            let isBold = $('#boldCheckbox').is(':checked');
+            let isItalic = $('#italicCheckbox').is(':checked');
+            let isUnderline = $('#underlineCheckbox').is(':checked');
+
+            // Tạo chuỗi chứa các thuộc tính CSS cần áp dụng
+            let styles = '';
+            if (isBold) {
+                styles += 'font-weight: bold;';
+            }
+            if (isItalic) {
+                styles += 'font-style: italic;';
+            }
+            if (isUnderline) {
+                styles += 'text-decoration: underline;';
+            }
+
+            // Áp dụng các thuộc tính này vào sampleText
+            $('#sampleText').attr('style', function(i, s) {
+                return (s || '') + styles;
+            });
         }
+
+        // Gọi applyTextStyles khi checkbox thay đổi
+        $('#boldCheckbox, #italicCheckbox, #underlineCheckbox').on('change', applyTextStyles);
+
+        // Thay đổi highlightText để kết hợp với các thuộc tính từ checkbox
+        function highlightText() {
+            let search = document.getElementById("searchText").value.trim(); // Lấy từ khóa tìm kiếm
+            if (search === '') return; // Nếu từ khóa tìm kiếm rỗng, không làm gì cả
+
+            let textElement = document.getElementById("text");
+            let originalText = textElement.textContent; // Lấy văn bản thuần
+
+            let searchEscaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape ký tự đặc biệt
+            let regex = new RegExp(searchEscaped, 'gi');
+
+            let leftColor = $("#color-left").val();
+            let rightColor = $("#color-right").val();
+
+            // Kiểm tra các checkbox để xác định kiểu in đậm, nghiêng, gạch dưới
+            let isBold = $('#boldCheckbox').is(':checked');
+            let isItalic = $('#italicCheckbox').is(':checked');
+            let isUnderline = $('#underlineCheckbox').is(':checked');
+
+            // Chuỗi chứa các kiểu dáng
+            let styleString = `background: linear-gradient(to right, ${leftColor}, ${rightColor}); -webkit-background-clip: text; color: transparent;`;
+            if (isBold) styleString += 'font-weight: bold;';
+            if (isItalic) styleString += 'font-style: italic;';
+            if (isUnderline) styleString += 'text-decoration: underline;';
+
+            // Highlight text bằng cách thêm các span với kiểu dáng
+            let highlightedText = originalText.replace(regex, (match) => {
+                return `<span style="${styleString}">${match}</span>`;
+            });
+
+            textElement.innerHTML = highlightedText;
+        }
+
+
+        //NEWS content
+        // Nội dung của các mục NEWS
+        const newsContents = {
+            News01: " nội dung của NEWS 01.",
+            News02: "nội dung của NEWS 02.",
+            News03: "nội dung của NEWS 03. ",
+            News04: " nội dung của NEWS 04. "
+        };
+
+        // Hàm để hiển thị/ẩn nội dung của NEWS
+        function toggleNewsContent(newsId) {
+            const contentDiv = document.getElementById(`content${newsId}`);
+            const isVisible = contentDiv.style.display === 'block';
+
+            // Hiển thị/ẩn nội dung
+            contentDiv.style.display = isVisible ? 'none' : 'block';
+            
+            // Cập nhật nội dung nếu đang ẩn (hiển thị thì cập nhật nội dung)
+            if (!isVisible) {
+                contentDiv.innerHTML = newsContents[newsId];
+            }
+        }
+
+        // Thêm sự kiện nhấp chuột vào các mục NEWS
+        document.getElementById("news01").addEventListener("click", () => toggleNewsContent("News01"));
+        document.getElementById("news02").addEventListener("click", () => toggleNewsContent("News02"));
+        document.getElementById("news03").addEventListener("click", () => toggleNewsContent("News03"));
+        document.getElementById("news04").addEventListener("click", () => toggleNewsContent("News04"));
+
+        // document.getElementById("news01").addEventListener("click", () => toggleNewsContent("news01"));
+        // document.getElementById("news02").addEventListener("click", () => toggleNewsContent("news02"));
+        // document.getElementById("news03").addEventListener("click", () => toggleNewsContent("news03"));
+        // document.getElementById("news04").addEventListener("click", () => toggleNewsContent("news04"));
+
+
+
+
+
 
         // Delete text
         function deleteText() {
             let search = document.getElementById("searchText").value;
-            let text = document.getElementById("sampleText").innerHTML;
+            let text = document.getElementById("text").innerHTML;
             let regex = new RegExp(search, 'g');
             let deleted = text.replace(regex, '');
-            document.getElementById("sampleText").innerHTML = deleted;
+            document.getElementById("text").innerHTML = deleted;
         }
 
         // Reset text
         function resetText() {
-            document.getElementById("sampleText").innerHTML = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ipsum ratione dolorum, sunt deleniti laborum asperiores molestias! ...";
+            document.getElementById("text").innerHTML = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
         }
 
         // Load sample text
         function loadSample() {
-            document.getElementById("sampleText").innerHTML = "";
+            document.getElementById("text").innerHTML = "";
         }
 
         // Drag and Drop
